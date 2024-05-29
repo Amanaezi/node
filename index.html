@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet"href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+  <h1>Hello, world!</h1>
+  <button>Get Data</button>
+  <div class="output"></div>
+  <script>
+    const btn = document.querySelector("button");
+    const output = document.querySelector(".output");
+
+    btn.addEventListener("click", () => {
+      fetch("/data")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          output.innerHTML = `<h1>Data</h1><p>Message: ${data.message}</p><p>Greeting: ${data.greeting}</p>`;
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+          output.innerHTML = `<p>Error fetching data: ${error.message}</p>`;
+        });
+    });
+  </script>
+</body>
+</html>
